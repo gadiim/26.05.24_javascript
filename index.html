@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>26.05.24 | Homework | JavaScript</title>
+        <link rel="stylesheet" href="style.css">
+    </head> 
+    <style>
+        body {
+            background-color: rgb(234, 234, 222);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: auto;
+            font-family: sans-serif;
+        }
+        fieldset {
+            border-radius: 5px;
+            margin: 15px;
+        }
+        legend {
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            text-align: center; 
+            min-height: 75px; 
+            min-width: 200px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px darkgrey;
+            cursor: pointer;
+            filter: opacity(.7);
+        }
+        button:hover {
+            filter: none;
+        }
+        div {
+            text-align: center;
+            text-transform: uppercase;
+        }
+    </style>
+
+    <body>
+        <fieldset>
+            <legend>TASK 1</legend>
+                <button onclick="document.getElementById('displayColor').innerText=this.style.backgroundColor"
+                        style = "background-color: indigo;">
+                </button>
+                <button onclick="document.getElementById('displayColor').innerText=this.style.backgroundColor"
+                        style = "background-color: tomato;">
+                </button>
+                <div id ="displayColor">what color is it</div>
+        </fieldset> 
+
+        <fieldset>
+            <legend>TASK 2</legend>
+                <button onclick="setTimeout(() => { 
+                    document.getElementById('timeoutDisplayColor').innerText = this.style.backgroundColor; 
+                    }, 1000)"
+                        style = "background-color: gold;">
+                </button>
+                <button onclick="setTimeout(() => { 
+                    document.getElementById('timeoutDisplayColor').innerText = this.style.backgroundColor; 
+                    }, 1000);"
+                        style="background-color: hotpink;">
+                </button>
+                <div id ="timeoutDisplayColor">what color is it</div>
+        </fieldset> 
+
+        <fieldset> 
+            <legend>TASK 3 (var 1)</legend>
+                <button 
+                    id="steelBlueColor"
+                    onclick="setTimeout(() => { 
+                        const button = document.getElementById('steelBlueColor');
+                        button.style.backgroundColor = 'steelBlue';
+                        document.getElementById('timeoutDisplayColorFromStyle1').innerText = this.style.backgroundColor;
+                    }, 1000);">
+                </button>
+                <button 
+                    id="purpleColor"
+                    onclick="setTimeout(() => { 
+                        const button = document.getElementById('purpleColor');
+                        button.style.backgroundColor = 'purple';
+                        document.getElementById('timeoutDisplayColorFromStyle1').innerText = this.style.backgroundColor; 
+                    }, 1000);"
+                >
+            </button>
+                <div id ="timeoutDisplayColorFromStyle1">what color is it</div>
+        </fieldset>
+
+        <fieldset> 
+            <legend>TASK 3 (var 2)</legend>
+                <button 
+                    id="steelBlueColor"
+                    onclick="setTimeout(() => { 
+                        const button = document.getElementById('steelBlueColor');
+                        const computedStyle = getComputedStyle(button);
+                        document.getElementById('timeoutDisplayColorFromStyle2').innerText = computedStyle.backgroundColor;
+                    }, 1000);">
+                </button>
+                <button 
+                    id="purpleColor"
+                    onclick="setTimeout(() => { 
+                        const button = document.getElementById('purpleColor');
+                        const computedStyle = getComputedStyle(button);
+                        document.getElementById('timeoutDisplayColorFromStyle2').innerText = computedStyle.backgroundColor;
+                    }, 1000);">
+            </button>
+                <div id ="timeoutDisplayColorFromStyle2">what color is it</div>
+        </fieldset>
+    </body> 
+</html>
