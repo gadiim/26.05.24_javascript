@@ -6,7 +6,7 @@
         <title>26.05.24 | Homework | JavaScript</title>
         <link rel="stylesheet" href="style.css">
     </head> 
-    <style>
+<style>
         body {
             background-color: rgb(234, 234, 222);
             display: flex;
@@ -24,7 +24,6 @@
             padding: 20px;
         }
         button {
-            text-align: center; 
             min-height: 75px; 
             min-width: 200px;
             margin: 20px;
@@ -37,79 +36,93 @@
             filter: none;
         }
         div {
-            text-align: center;
+            text-align: left;
             text-transform: uppercase;
+            margin-left: 20px;
         }
-    </style>
+</style>
 
-    <body>
-        <fieldset>
-            <legend>TASK 1</legend>
-                <button onclick="document.getElementById('displayColor').innerText=this.style.backgroundColor"
-                        style = "background-color: indigo;">
-                </button>
-                <button onclick="document.getElementById('displayColor').innerText=this.style.backgroundColor"
-                        style = "background-color: tomato;">
-                </button>
-                <div id ="displayColor">what color is it</div>
-        </fieldset> 
+<body>
+    <fieldset>
+        <legend>TASK 1</legend>
+        <button onclick="displayPropertyResults(this, 'displayProperties')" style="background-color: indigo;"></button>
+        <button onclick="displayPropertyResults(this, 'displayProperties')" style="background-color: tomato;"></button>
+        <div id="displayProperties"></div>
+    </fieldset> 
+    <fieldset>
+        <legend>TASK 2</legend>
+        <button onclick="setTimeoutDisplayPropertyResults(this, 'setTimeoutDisplayProperties')" style="background-color: gold;"></button>
+        <button onclick="setTimeoutDisplayPropertyResults(this, 'setTimeoutDisplayProperties')" style="background-color: hotpink;"></button>
+        <div id="setTimeoutDisplayProperties"></div>
+    </fieldset> 
+    <fieldset>
+        <legend>TASK 3</legend>
+        <button id="steelBlueColor" onclick="setTimeoutDisplayPropertyResultsWithCss(this, 'setTimeoutDisplayPropertiesWithCss')"></button>
+        <button id="purpleColor" onclick="setTimeoutDisplayPropertyResultsWithCss(this, 'setTimeoutDisplayPropertiesWithCss')"></button>
+        <div id="setTimeoutDisplayPropertiesWithCss"></div>
+    </fieldset> 
+    
+    <script>       
+        const properties = [
+            'background-color', 'min-height', 'min-width', 'margin', 'border-radius', 'box-shadow', 
+            'cursor', 'filter'
+        ];
+        const propertiesText = properties.map(prop => `${prop}:`).join('\n');
+        document.getElementById('displayProperties').innerText = propertiesText;
+        document.getElementById('setTimeoutDisplayProperties').innerText = propertiesText;
+        document.getElementById('setTimeoutDisplayPropertiesWithCss').innerText = propertiesText;
+        
+        function rgbToColorName(rgb) {
+            const colors = {
+                'rgb(75, 0, 130)': 'indigo',
+                'rgb(255, 99, 71)': 'tomato',
+                'rgb(255, 215, 0)': 'gold',
+                'rgb(255, 105, 180)': 'hotpink',
+                'rgb(70, 130, 180)': 'steelblue',
+                'rgb(128, 0, 128)': 'purple',
+                'rgb(169, 169, 169)': 'darkgray',
+                'rgb(0, 0, 139)': 'darkblue',
+                'rgb(139, 0, 139)': 'darkmagenta',
+            };
+            if (colors[rgb]) {
+                return colors[rgb];
+            }
+            return rgb;
+        }
 
-        <fieldset>
-            <legend>TASK 2</legend>
-                <button onclick="setTimeout(() => { 
-                    document.getElementById('timeoutDisplayColor').innerText = this.style.backgroundColor; 
-                    }, 1000)"
-                        style = "background-color: gold;">
-                </button>
-                <button onclick="setTimeout(() => { 
-                    document.getElementById('timeoutDisplayColor').innerText = this.style.backgroundColor; 
-                    }, 1000);"
-                        style="background-color: hotpink;">
-                </button>
-                <div id ="timeoutDisplayColor">what color is it</div>
-        </fieldset> 
+        function parseRGB(property) {
+            const parts = property.split(' ');
+            let color = parts.slice(0, 3).join(' ');
+            color = rgbToColorName(color);
+            const remainingParts = parts.slice(3).join(' ');
+            return `${color} ${remainingParts}`;
+        }
 
-        <fieldset> 
-            <legend>TASK 3 (var 1)</legend>
-                <button 
-                    id="steelBlueColor"
-                    onclick="setTimeout(() => { 
-                        const button = document.getElementById('steelBlueColor');
-                        button.style.backgroundColor = 'steelBlue';
-                        document.getElementById('timeoutDisplayColorFromStyle1').innerText = this.style.backgroundColor;
-                    }, 1000);">
-                </button>
-                <button 
-                    id="purpleColor"
-                    onclick="setTimeout(() => { 
-                        const button = document.getElementById('purpleColor');
-                        button.style.backgroundColor = 'purple';
-                        document.getElementById('timeoutDisplayColorFromStyle1').innerText = this.style.backgroundColor; 
-                    }, 1000);"
-                >
-            </button>
-                <div id ="timeoutDisplayColorFromStyle1">what color is it</div>
-        </fieldset>
+        function displayPropertyResults(button, id) {
+            const computedStyle = getComputedStyle(button);
+            const propertiesText = properties.map(prop => `${prop}: ${parseRGB(computedStyle.getPropertyValue(prop))}`).join('\n');
+            document.getElementById(id).innerText = propertiesText;
+        }
 
-        <fieldset> 
-            <legend>TASK 3 (var 2)</legend>
-                <button 
-                    id="steelBlueColor"
-                    onclick="setTimeout(() => { 
-                        const button = document.getElementById('steelBlueColor');
-                        const computedStyle = getComputedStyle(button);
-                        document.getElementById('timeoutDisplayColorFromStyle2').innerText = computedStyle.backgroundColor;
-                    }, 1000);">
-                </button>
-                <button 
-                    id="purpleColor"
-                    onclick="setTimeout(() => { 
-                        const button = document.getElementById('purpleColor');
-                        const computedStyle = getComputedStyle(button);
-                        document.getElementById('timeoutDisplayColorFromStyle2').innerText = computedStyle.backgroundColor;
-                    }, 1000);">
-            </button>
-                <div id ="timeoutDisplayColorFromStyle2">what color is it</div>
-        </fieldset>
-    </body> 
-</html>
+        function setTimeoutDisplayPropertyResults(button, id) {
+            const computedStyle = getComputedStyle(button);
+            let propertiesText = '';
+
+            for (let i = 0; i < properties.length; i++) {
+                propertiesText += `${properties[i]}:\n`;
+            }
+
+            for (let i = 0; i < properties.length; i++) {
+                setTimeout(() => {
+                    const prop = properties[i];
+                    propertiesText = propertiesText.replace(`${prop}:\n`, `${prop}: ${parseRGB(computedStyle.getPropertyValue(prop))}\n`);
+                    document.getElementById(id).innerText = propertiesText;
+                }, (i + 1) * 1000);
+            }
+        }
+
+        function setTimeoutDisplayPropertyResultsWithCss(button, id) {
+            setTimeoutDisplayPropertyResults(button, id);
+        }    
+    </script>
+</body>
